@@ -26,6 +26,7 @@ def get_words(id_user,ngram,n_top):
 
 	#representar el conjunto de tweets 'data' en un modelo 'bag of words'
 	count_vect = TfidfVectorizer(use_idf=False,ngram_range=(ngram,ngram))
+	#si ngram = 2, se agruparan las palabras del diccionario en duplas, ..
 	#use_idf = False para obtener la frecuencia normalizada para cada palabra
 
 	x_train_counts = count_vect.fit_transform(data)#ajustar el modelo
@@ -43,13 +44,13 @@ def get_words(id_user,ngram,n_top):
 	#construye un DataFrame para almacenar los datos y visualizar grafica
 	data = [ [ words[i], likelihood_words[i] ]  for i in range(n_top) ]
 	df = pd.DataFrame(data=data,columns=['words','likelihood'])
-	df.to_csv('distribucion_frases_' + id_user  + '.csv')
+	#df.to_csv('distribucion_frases_' + id_user  + '.csv')
 	ax = sns.barplot(x="words", y="likelihood", data=df)
 	plt.show()
 	
 #Scripts para encontrar los ngrams con mayor probabilidad de ocurrencia en la cuenta MashiRafael
 
 id = 'KarlaMoralesR'
-n_grams = 1
+n_grams = 2
 n_tops = 10
 get_words(id,n_grams,n_tops)
